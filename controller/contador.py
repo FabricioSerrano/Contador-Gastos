@@ -52,7 +52,7 @@ class Contador:
     
     def __csv(self) -> None:
 
-        with open('./gastos.csv', mode='w', encoding='utf-8', newline='') as arquivo_fisico:
+        with open('./Gastos.csv', mode='w', encoding='utf-8', newline='') as arquivo_fisico:
             csv_writer = writer(arquivo_fisico, delimiter=';', lineterminator='\n')
 
             csv_writer.writerow(['data', 'nome', 'valor'])
