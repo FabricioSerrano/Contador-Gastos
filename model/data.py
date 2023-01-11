@@ -7,6 +7,7 @@ class Data:
         self.ano : int
         self.__data_final : date
 
+
     def input_data(self) -> date:
 
         print('Data da compra:')
@@ -14,15 +15,7 @@ class Data:
         self.mes : int = self.__set_mes()
         self.ano : int = self.__set_ano()
 
-        try:
-            self.__data_final =  date(
-                self.ano,
-                self.mes,
-                self.dia
-            )
-        except ValueError:
-            print('\tData inválida. ')
-            return self.input_data()
+        self.__testar_data()
 
         while True:
 
@@ -38,6 +31,20 @@ class Data:
                 case _:
                     print('\n\tResposta inválida')
                     continue
+
+        
+    def auto_input_data(self, data : str) -> date:
+
+        __data : list[str] = data.split('-')
+
+        self.ano = int(__data[0])
+        self.mes = int(__data[1])
+        self.dia = int(__data[2])
+        
+        self.__testar_data()
+
+        return self.__data_final
+
 
 
     def __str__(self) -> str:
@@ -88,3 +95,14 @@ class Data:
                 print(f'\t{ano} não pode ser convertido para inteiro')
                 continue
 
+
+    def __testar_data(self) -> None | date:
+        try:
+            self.__data_final =  date(
+                self.ano,
+                self.mes,
+                self.dia
+            )
+        except ValueError:
+            print('\tData inválida. ')
+            return self.input_data()

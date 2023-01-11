@@ -1,19 +1,47 @@
 from model.gasto import Gasto
-from csv import writer
+from csv import writer, reader
+from os import listdir
 
 
 class Contador:
     def __init__(self) -> None:
-        
+
         self.__gastos : list[Gasto] = []
+        self.__gasto = Gasto()
+        self.arquivo = False
+
+
+        for item in listdir('./'):
+            if item == 'Gastos.csv':
+                self.arquivo = list(reader(open('./Gastos.csv', encoding='utf-8'), delimiter=';', lineterminator='\n'))[1:]
+                break
+                
+
+        
+        if self.arquivo:
+            for item in self.arquivo:
+
+                self.__gasto = Gasto()
+
+                self.__gasto.auto_input(item) 
+
+                self.__gastos.append(
+                    self.__gasto
+                )
+         
+                
+            
 
         while True:
 
             match input('\nMenu\n\t1-Cadastrar\n\t2-Sair\n\t3-Somar\n\t4-CSV\n\t5-Exibir\n\n').lower():
 
                 case 'cadastrar' | '1':
-                
-                    self.__gastos.append(Gasto())
+                    
+                    self.__gasto = Gasto()
+
+                    self.__gasto.manual_input()
+                    self.__gastos.append(self.__gasto)
 
                 case 'sair' | '2':
                     print('\nFinalizando...')
@@ -61,4 +89,4 @@ class Contador:
                 csv_writer.writerow([gasto.data, gasto.nome, gasto.valor])
 
         print('Arquivo salvo na pasta do programa')
-        
+    
